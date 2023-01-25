@@ -2,12 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class GeneratePage extends StatefulWidget {
-  GeneratePage({super.key, this.image});
+  GeneratePage({super.key, this.imagename});
 
-  final File? image;
-  File? imageFile;
+  final imagename;
   @override
   State<GeneratePage> createState() => _GeneratePageState(image: null);
 }
@@ -53,30 +51,15 @@ class _GeneratePageState extends State<GeneratePage> {
               SizedBox(
                 height: 80.0,
               ),
-              Stack(
-                children: [
-                  Container(
-                    child: (image != null)
-                        ? Container(
-                            height: MediaQuery.of(context).size.height * 0.28,
-                            width: MediaQuery.of(context).size.width * 0.75,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              image: DecorationImage(
-                                image: FileImage(File(image!.path)),
-                                fit: BoxFit.fill,
-                              ),
-                            ))
-                        : Container(
-                            height: MediaQuery.of(context).size.height * 0.27,
-                            width: MediaQuery.of(context).size.width * 0.77,
-                            decoration: BoxDecoration(
-                              color: Color(0xff8440fa),
-                              borderRadius: BorderRadius.circular(25),
-                            )),
-                  ),
-                ],
-              ),
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: FileImage(widget.imagename),
+                      fit: BoxFit.fill,
+                    ),
+                  )),
               SizedBox(
                 height: 50.0,
               ),

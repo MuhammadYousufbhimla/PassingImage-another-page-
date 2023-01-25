@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:passingimage/generate.dart';
 
-
-
 class SearchPage extends StatefulWidget {
   SearchPage({super.key});
 
@@ -13,60 +11,80 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  
   String name = "";
   XFile? image;
   final picker = ImagePicker();
 
-
- File? imageFile;
+  File? imageFile;
   XFile? PFile;
-  File?rec;
+  File? rec;
 
+  // /// Get from gallery
+  // _getFromGallery() async {
+  //   final XFile? pickedFile = await ImagePicker().pickImage(
+  //     source: ImageSource.gallery,
+  //     maxWidth: 1800,
+  //     maxHeight: 1800,
+  //   );
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       imageFile = File(pickedFile.path);
+  //       PFile = pickedFile;
+  //       rec = imageFile;
+  //       print(rec);
+  //     });
+  //   }
+  // }
 
+  // /// Get from Camera
+  // _getFromCamera() async {
+  //   final XFile? pickedFile = await ImagePicker().pickImage(
+  //     source: ImageSource.camera,
+  //     maxWidth: 1800,
+  //     maxHeight: 1800,
+  //   );
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       imageFile = File(pickedFile.path);
+  //       PFile = pickedFile;
+  //       rec = imageFile;
+  //       print(rec);
+  //     });
+  //   }
+  // }
 
+  Future _getFromCamera() async {
+    image = await ImagePicker().pickImage(source: ImageSource.camera);
 
-
- /// Get from gallery
-  _getFromGallery() async {
-   
-    final XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = File(pickedFile.path);
-        PFile  = pickedFile;
-         rec=imageFile;
-        print(rec);
-      });
-    }
+    setState(() {
+      image = image;
+      print(image!.path);
+    });
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => GeneratePage(
+                  imagename: File(image!.path),
+                )));
   }
 
-  /// Get from Camera
-  _getFromCamera() async {
-    final XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = File(pickedFile.path);
-        PFile  = pickedFile;
-        rec=imageFile;
-        print(rec);
-      });
-    }
+  Future _getFromGallery() async {
+    image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      image = image;
+    });
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => GeneratePage(
+                  imagename: File(image!.path),
+                )));
   }
 
- 
   @override
   Widget build(BuildContext context) {
     List title = ['Mammogram', 'Ultrasound'];
-    
 
     return Scaffold(
       backgroundColor: Color(0xfff3edf9),
@@ -95,7 +113,6 @@ class _SearchPageState extends State<SearchPage> {
                         leading: InkWell(
                           onTap: () {
                             print("attribue page");
-                          
                           },
                           child: CircleAvatar(
                             radius: 30,
@@ -128,17 +145,15 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child:(
-                         Text(
-                         "Yousuf",                          
-                          style: TextStyle(
-                            fontSize: 26.0,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                         )
-                      ),
+                      child: (Text(
+                        "Yousuf",
+                        style: TextStyle(
+                          fontSize: 26.0,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      )),
                     ),
                   ],
                 ),
@@ -226,7 +241,6 @@ class _SearchPageState extends State<SearchPage> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                    
                                       Center(
                                         child: Text(
                                           title[index],
@@ -238,7 +252,34 @@ class _SearchPageState extends State<SearchPage> {
                                           ),
                                         ),
                                       ),
-                                      
+                                      // Container(
+                                      //     child: (image != null)
+                                      //         ? Container(
+                                      //             height: MediaQuery.of(context)
+                                      //                     .size
+                                      //                     .height *
+                                      //                 0.15,
+                                      //             width: MediaQuery.of(context)
+                                      //                 .size
+                                      //                 .width,
+                                      //             decoration: BoxDecoration(
+                                      //               image: DecorationImage(
+                                      //                 image: FileImage(
+                                      //                     File(image!.path)),
+                                      //                 fit: BoxFit.fill,
+                                      //               ),
+                                      //             ))
+                                      //         : Container(
+                                      //             height: MediaQuery.of(context)
+                                      //                     .size
+                                      //                     .height *
+                                      //                 0.15,
+                                      //             width: MediaQuery.of(context)
+                                      //                 .size
+                                      //                 .width,
+                                      //             decoration: BoxDecoration(),
+                                      //           )),
+                                      // Text("data")
                                     ],
                                   )),
                             );
@@ -283,8 +324,7 @@ class _SearchPageState extends State<SearchPage> {
                         InkWell(
                           onTap: () async {
                             Navigator.of(context).pop();
-                      _getFromGallery();
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>GeneratePage(image: rec,)));
+                            _getFromGallery();
                           },
                           child: Container(
                             margin: EdgeInsets.only(
@@ -321,9 +361,7 @@ class _SearchPageState extends State<SearchPage> {
                           onTap: () async {
                             Navigator.of(context).pop();
                             _getFromCamera();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>GeneratePage(image: rec,)));
                           },
-
                           child: Container(
                             margin: EdgeInsets.only(
                                 right: MediaQuery.of(context).size.width * 0.05,
@@ -350,7 +388,7 @@ class _SearchPageState extends State<SearchPage> {
                                       color: Color(0xff3f3754),
                                       fontWeight: FontWeight.w300,
                                       fontSize: 20),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -360,5 +398,4 @@ class _SearchPageState extends State<SearchPage> {
                   ))
             ]));
       });
-
 }
