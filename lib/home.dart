@@ -84,7 +84,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    List title = ['Mammogram', 'Ultrasound'];
+    List title = ['Hardware', 'Software'];
 
     return Scaffold(
       backgroundColor: Color(0xfff3edf9),
@@ -120,7 +120,7 @@ class _SearchPageState extends State<SearchPage> {
                           ),
                         ),
                         title: Text(
-                          'Mammory',
+                          'System',
                           style: TextStyle(
                               fontSize: 25.0,
                               fontWeight: FontWeight.w600,
@@ -169,7 +169,7 @@ class _SearchPageState extends State<SearchPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Memory Detect',
+                      'Software Detect',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
